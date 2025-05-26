@@ -9,7 +9,8 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
-
+app.use(express.static('../public'));
+app.use('/', express.static('public'));
 app.use(express.json());
 
 // Статичні файли React
