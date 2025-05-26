@@ -16,12 +16,12 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../build')));
 
 // API
-app.use('/api/recipes', require('./routes/recipes'));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
-// Всі інші маршрути -> React
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
