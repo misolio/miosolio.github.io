@@ -1,27 +1,18 @@
-// server/server.js
-require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Firebase підключення (нічого тут не ініціалізуємо)
-const { verifyToken } = require('./firebaseAdmin');
-
-// Middleware
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public')));
-
-// React static
-app.use(express.static(path.join(__dirname, '../build')));
+const PORT = process.env.PORT || 10000;
 
 // API
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use('/api/recipes', require('./routes/recipes'));
 
+// Видача статичних файлів з build/
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Для всіх інших маршрутів повертаємо index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
